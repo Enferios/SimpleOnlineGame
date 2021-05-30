@@ -7,6 +7,7 @@
 #include "SOGCharacter.generated.h"
 
 class UCameraComponent;
+class UPlayerInteractionComponent;
 
 UCLASS(Abstract)
 class SIMPLEONLINEGAME_API ASOGCharacter : public ACharacter
@@ -29,6 +30,12 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Character|Camera")
 	UCameraComponent* Camera;
 
+	UPROPERTY(VisibleAnywhere, Category = "Character|Interaction")
+	UPlayerInteractionComponent* InteractionComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "Character|Interaction")
+	AActor* CurrentTarget;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -41,6 +48,13 @@ protected:
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
 
+	/** Interaction */
+	void Interact();
+
+	UFUNCTION(Server, Reliable, Category = "Interaction")
+	void Server_Interact();
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -51,5 +65,8 @@ public:
 private:
 
 	bool CanMove();
+
+	UFUNCTION()
+	void UpdateCurrentTarget(AActor* NewTarget);
 
 };

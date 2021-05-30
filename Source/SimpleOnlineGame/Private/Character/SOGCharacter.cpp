@@ -5,6 +5,9 @@
 
 #include "Camera/CameraComponent.h"
 
+#include "Components/PlayerInteractionComponent.h"
+#include "Interface/InteractableInterface.h"
+
 // Sets default values
 ASOGCharacter::ASOGCharacter()
 {
@@ -23,6 +26,7 @@ ASOGCharacter::ASOGCharacter()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(GetRootComponent());
 
+	InteractionComponent = CreateDefaultSubobject<UPlayerInteractionComponent>(TEXT("InteractionComponent"));
 
 }
 
@@ -31,6 +35,7 @@ void ASOGCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	InteractionComponent->OnTargetChanged.AddDynamic(this, &ASOGCharacter::UpdateCurrentTarget);
 }
 
 // Called every frame
@@ -50,6 +55,8 @@ void ASOGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASOGCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASOGCharacter::MoveRight);
+
+	PlayerInputComponent->BindAction("Interact", EInputEvent::IE_Pressed, this, &ASOGCharacter::Interact);
 }
 
 void ASOGCharacter::Turn(float AxisValue)
@@ -97,8 +104,25 @@ void ASOGCharacter::MoveRight(float AxisValue)
 		AddMovementInput(Direction, AxisValue);
 	}
 }
+void ASOGCharacter::Interact()
+{
+	Server_Interact();
+}
+
+void ASOGCharacter::Server_Interact_Implementation()
+{
+	if (CurrentTarget != nullptr)
+	{
+		IInteractableInterface::Execute_Interact(CurrentTarget, this);
+	}
+}
 
 bool ASOGCharacter::CanMove()
 {
 	return bCanMove;
+}
+
+void ASOGCharacter::UpdateCurrentTarget(AActor* NewTarget)
+{
+	CurrentTarget = NewTarget;
 }
