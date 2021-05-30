@@ -1,0 +1,2 @@
+Content/SimpleOnlineGame/Assets/** filter=lfs diff=lfs merge=lfs -text
+Content/SimpleOnlineGame/Maps/** filter=lfs diff=lfs merge=lfs -text
