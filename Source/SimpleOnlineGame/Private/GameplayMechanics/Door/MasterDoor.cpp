@@ -13,13 +13,15 @@ AMasterDoor::AMasterDoor()
 	bReplicates = true;
 	NetUpdateFrequency = 10;
 
-	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DoorMesh"));
-	DoorMesh->SetupAttachment(GetRootComponent());
+	
 
 	DoorInteractCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("InteractCollision"));
 	DoorInteractCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	DoorInteractCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
-	DoorInteractCollision->SetupAttachment(DoorMesh);
+	RootComponent = DoorInteractCollision;
+
+	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DoorMesh"));
+	DoorMesh->SetupAttachment(GetRootComponent());
 }
 
 // Called when the game starts or when spawned
