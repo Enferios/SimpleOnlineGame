@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class SIMPLEONLINEGAME_API ASimpleOnlineGameGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
