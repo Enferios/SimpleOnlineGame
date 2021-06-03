@@ -36,6 +36,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Character|Interaction")
 	AActor* CurrentTarget;
 
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
