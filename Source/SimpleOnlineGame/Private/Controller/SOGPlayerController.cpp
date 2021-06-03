@@ -69,10 +69,7 @@ void ASOGPlayerController::UpdateMatchResultInfo_Implementation(bool IsVictory, 
 	Client_UpdateMatchResultInfo(IsVictory, DelayBeforeRestart);
 }
 
-void ASOGPlayerController::StartGameRoundTimer_Implementation(float RoundDuration)
-{
-	Client_StartGameRoundTimer(RoundDuration);
-}
+
 
 void ASOGPlayerController::Client_StartGameRoundTimer_Implementation(float RoundDuration)
 {

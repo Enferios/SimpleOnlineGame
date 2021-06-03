@@ -18,11 +18,12 @@ AMasterPickup::AMasterPickup()
 
 	bReplicates = true;
 	SetReplicateMovement(true);
+	NetUpdateFrequency = 10.f;
 
 	Type = EQuestItemType::EQIT_None;
 
 	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PickupMesh"));
-	PickupMesh->SetupAttachment(GetRootComponent());
+	RootComponent = PickupMesh;
 	PickupMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	PickupMesh->SetRelativeLocation(FVector(0.f, 0.f, 100.f));
 

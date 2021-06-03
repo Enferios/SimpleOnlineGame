@@ -33,10 +33,6 @@ public:
 	/** Called from game mode */
 	void UpdateMatchResultInfo(bool IsVictory, float DelayBeforeRestart);
 	void UpdateMatchResultInfo_Implementation(bool IsVictory, float DelayBeforeRestart);
-
-	/** Called from game mode */
-	void StartGameRoundTimer(float RoundDuration);
-	void StartGameRoundTimer_Implementation(float RoundDuration);
 	
 protected:
 

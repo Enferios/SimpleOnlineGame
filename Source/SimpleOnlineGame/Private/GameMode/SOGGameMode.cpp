@@ -29,7 +29,7 @@ void ASOGGameMode::BeginPlay()
 
 bool ASOGGameMode::TryScore_Implementation(EQuestItemType ItemType) 
 {
-	if (true)
+	if (ItemType == QuestInfo.NeededItem)
 	{
 		IncrementScore();
 
@@ -102,26 +102,18 @@ void ASOGGameMode::SetGameRoundTimer()
 {
 	GetWorld()->GetTimerManager().SetTimer(GameRoundTimer, this, &ASOGGameMode::UpdateGameRoundTime, 1.f, true);
 
-	StartGameRoundTimerOnClients();
 }
 
 void ASOGGameMode::UpdateGameRoundTime()
 {
-
-	if (++CurrentRoundTime == GameRoundDuration)
+	bool bQuestFailed = QuestInfo.CurrentCount != QuestInfo.NeededCount;
+	bool bIsTimeOut = ++CurrentRoundTime == GameRoundDuration;
+	if (bQuestFailed && bIsTimeOut)
 	{
 		EndGameMatch(false);
 	}
 }
 
-void ASOGGameMode::StartGameRoundTimerOnClients()
-{
-	auto ControllerIter = GetWorld()->GetPlayerControllerIterator();
-	for (ControllerIter; ControllerIter; ++ControllerIter)
-	{
-		IPlayerControllerInterface::Execute_StartGameRoundTimer(ControllerIter->Get(), GameRoundDuration);
-	}
-}
 
 float ASOGGameMode::GetRoundRemainingTime_Implementation()
 {

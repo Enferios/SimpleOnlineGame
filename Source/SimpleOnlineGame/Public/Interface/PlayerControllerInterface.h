@@ -32,6 +32,4 @@ public:
 	UFUNCTION(BlueprintNativeEvent, Category = "PlayerControllerInterface")
 	void UpdateMatchResultInfo(bool IsVictory, float DelayBeforeRestart);
 
-	UFUNCTION(BlueprintNativeEvent, Category = "PlayerControllerInterface")
-	void StartGameRoundTimer(float RoundDuration);
 };
